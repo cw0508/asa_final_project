@@ -4,18 +4,19 @@ import matplotlib.pyplot as plt
 from collections import Counter
 from scipy.optimize import curve_fit
 
-plt.style.use('plot_style.txt')
+# plt.style.use('plot_style.txt')
 
 # -----------------------------------------------------------------
 # Variables:
 # -----------------------------------------------------------------
 # Parameters
-Lx, Ly = 200, 200   # Lattice dimensions
-t_nn = 1.0          # Nearest neighbor hopping constant
-U = 2.0             # On-site Coulomb interaction strength
-T = 0.1             # Temperature in units where kB = 1
-kB = 1              # Boltzmann constant
-mc_steps = 2000     # Number of Monte Carlo steps
+Lx, Ly = 200, 200           # Lattice dimensions
+t_nn = 1.0                  # Nearest neighbor hopping constant
+U = 2.0                     # On-site Coulomb interaction strength
+T = 0.1                     # Temperature in units where kB = 1
+kB = 1                      # Boltzmann constant
+mc_steps = 200000           # Number of Monte Carlo steps
+
 
 # -----------------------------------------------------------------
 # Function to compute the lattice energy
@@ -42,6 +43,8 @@ lattice = np.random.choice([-1, 1], size=(Lx, Ly))
 lattices = {}
 current_energy = compute_energy(lattice, t_nn, U)
 
+
+# -----------------------------------------------------------------
 # Compute intervals for snapshots
 snapshot_intervals = [int(mc_steps * i / 4) for i in range(5)]
 
@@ -55,6 +58,7 @@ for step in range(mc_steps):
 
     if step in snapshot_intervals:
         lattices[step] = lattice.copy()
+
 
 # -----------------------------------------------------------------
 # Flood fill function for cluster analysis
@@ -90,6 +94,7 @@ def analyze_clusters(lattice):
                 label += 1
     return cluster_sizes, clusters
 
+
 # -----------------------------------------------------------------
 # Plotting the evolution of cluster sizes
 cluster_sizes_over_time = []
@@ -109,7 +114,7 @@ for key, lattice in lattices.items():
 
     plt.loglog(sizes, probabilities, '+', label=f'Step {key}')
 
-
+# -----------------------------------------------------------------
 steps = snapshot_intervals
 average_sizes = [np.mean(s) if s else 0 for s in cluster_sizes_over_time]
 
@@ -117,6 +122,8 @@ average_sizes = [np.mean(s) if s else 0 for s in cluster_sizes_over_time]
 if len(average_sizes) < len(steps):
     average_sizes.extend([0] * (len(steps) - len(average_sizes)))
 
+
+# Plotting the average cluster size over time
 plt.plot(steps, average_sizes, marker='x', linestyle='--', color='b', label='Average Cluster Size ⟨s⟩')
 
 # Set titles and labels
@@ -127,4 +134,14 @@ plt.grid(True)
 plt.legend()
 plt.show()
 
+
+plt.plot(steps, average_sizes, marker='x', linestyle='--', color='b', label='Average Cluster Size ⟨s⟩')
+
+# Set titles and labels
+plt.title('Cluster Size Distributions and Average Cluster Size Over Time')
+plt.xlabel('Cluster size (s)')
+plt.ylabel('P(s) / Average Cluster Size ⟨s⟩')
+plt.grid(True)
+plt.legend()
+plt.show()
 
