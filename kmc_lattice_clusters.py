@@ -3,7 +3,7 @@ import random
 import matplotlib.pyplot as plt
 from collections import Counter
 
-plt.style.use('plot_style.txt')
+# plt.style.use('plot_style.txt')
 # plt.rcParams['figure.constrained_layout.use'] = True
 
 # -----------------------------------------------------------------
@@ -133,4 +133,29 @@ fig.suptitle(f'Kinetic Monte Carlo (kMC) Simulation of 2D Falicov-Kimball (FK) M
 
 plt.tight_layout()
 plt.show()
+
+
+# -----------------------------------------------------------------
+# Plotting
+fig, axs = plt.subplots(1, len(snapshot_intervals) + 1, figsize=(15, 4))
+
+# Subplots for lattice configurations at different steps
+for index, step in enumerate(snapshot_intervals):
+    im = axs[index].imshow(lattices[step], cmap='viridis')
+    axs[index].set_title(f'Lattice @ Step {step}')
+    axs[index].set_xlabel('x')
+    axs[index].set_ylabel('y')
+
+# Subplot for energy vs. Monte Carlo steps
+axs[-1].plot(range(mc_steps), energy_values)
+axs[-1].set_title('Energy vs. Monte Carlo Steps')
+axs[-1].set_xlabel('Monte Carlo Steps')
+axs[-1].set_ylabel('Energy [Joules (J)]')
+
+# Adding a title to the entire figure
+fig.suptitle(f'Monte Carlo Simulation of 2D Ising Model @ Temp = {T} [Kelvin (K)]')
+
+plt.tight_layout()
+plt.show()
+
 
