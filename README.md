@@ -1,7 +1,7 @@
 # Kinetic Monte Carlo Simulations on the Falicov-Kimball Model
 
 ## Project Overview
-This project implements Kinetic Monte Carlo (kMC) simulations to study the dynamics of phase separation in correlated electron systems, particularly using the Falicov-Kimball model. The simulations focus on understanding how temperature affect the dynamics and stability of electron clusters, based on the paper: https://www.pnas.org/doi/epdf/10.1073/pnas.2119957119
+This project implements Kinetic Monte Carlo (kMC) simulations to study the dynamics of phase separation in correlated electron systems, particularly using the Falicov-Kimball model. The simulations focus on understanding how temperature and effective potential affect the dynamics and stability of electron clusters, based on the paper: https://www.pnas.org/doi/epdf/10.1073/pnas.2119957119
 
 ## Features
 - **Kinetic Monte Carlo Simulations**: Implements kMC to model electron dynamics.
